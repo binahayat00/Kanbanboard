@@ -1,5 +1,0 @@
-SetEnv APPLICATION_ENV development
-# Prevent Apache from serving .ht* files:
-<FilesMatch "^\.php">
-
-</FilesMatch>
