@@ -8,7 +8,6 @@ class GithubClient
 
     public function __construct($token, $account)
     {
-        require '../../vendor/autoload.php';
         $this->account = $account;
         $this->client= new \Github\Client(new \Github\HttpClient\CachedHttpClient(array('cache_dir' => '/tmp/github-api-cache')));
         $this->client->authenticate($token, \Github\Client::AUTH_HTTP_TOKEN);
