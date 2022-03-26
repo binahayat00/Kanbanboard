@@ -13,6 +13,7 @@ require __DIR__ .'/../classes/KanbanBoard/Authentication.php';
 $repositories = explode('|', Utilities::env('GH_REPOSITORIES'));
 $authentication = new \KanbanBoard\Login();
 $token = $authentication->login();
+
 $github = new GithubClient($token, Utilities::env('GH_ACCOUNT'));
 $board = new \KanbanBoard\Application($github, $repositories, array('waiting-for-feedback'));
 $data = $board->board();
