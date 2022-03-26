@@ -7,7 +7,7 @@ class Utilities
 	}
 
 	public static function env($name, $default = NULL) {
-		$value = getenv($name);
+		$value = $_ENV[$name];
 		if($default !== NULL) {
 			if(!empty($value))
 				return $value;
