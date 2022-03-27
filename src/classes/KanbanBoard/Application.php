@@ -29,6 +29,7 @@ class Application {
 			}
 		}
 		ksort($ms);
+		$milestones = [];
 		foreach ($ms as $name => $data)
 		{
 			$issues = $this->issues($data['repository'], $data['number']);
@@ -50,8 +51,8 @@ class Application {
 
 	private function issues($repository, $milestone_id)
 	{
-		$i = $this->github->issues($repository, $milestone_id);
-		foreach ($i as $ii)
+		$indexes = $this->github->issues($repository, $milestone_id);
+		foreach ($indexes as $ii)
 		{
 			if (isset($ii['pull_request']))
 				continue;
@@ -59,7 +60,7 @@ class Application {
 				'id' => $ii['id'], 'number' => $ii['number'],
 				'title'            	=> $ii['title'],
 				'body'             	=> Markdown::defaultTransform($ii['body']),
-     'url' => $ii['html_url'],
+     			'url' => $ii['html_url'],
 				'assignee'         	=> (is_array($ii) && array_key_exists('assignee', $ii) && !empty($ii['assignee'])) ? $ii['assignee']['avatar_url'].'?s=16' : NULL,
 				'paused'			=> self::labels_match($ii, $this->paused_labels),
 				'progress'			=> self::_percent(
@@ -68,11 +69,15 @@ class Application {
 				'closed'			=> $ii['closed_at']
 			);
 		}
-		usort($issues['active'], function ($a, $b) {
-			return count($a['paused']) - count($b['paused']) === 0 ? strcmp($a['title'], $b['title']) : count($a['paused']) - count($b['paused']);
-		});
-		return $issues;
-	}
+		if(isset($issues)){
+			usort($issues['active'], function ($a, $b) {
+				return count($a['paused']) - count($b['paused']) === 0 ? strcmp($a['title'], $b['title']) : count($a['paused']) - count($b['paused']);
+			});
+			return $issues;
+		}
+		else
+			return null;
+		}
 
 	private static function _state($issue)
 	{
