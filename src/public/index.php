@@ -1,6 +1,6 @@
 <?php
+
 use KanbanBoard\Login;
-use KanbanBoard\GithubActual;
 use KanbanBoard\Utilities;
 use KanbanBoard\Application;
 

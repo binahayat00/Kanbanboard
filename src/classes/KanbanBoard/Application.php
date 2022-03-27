@@ -1,12 +1,7 @@
 <?php
 namespace KanbanBoard;
 
-use Github\Client;
-use vierbergenlars\SemVer\version;
-
-use vierbergenlars\SemVer\expression;
-use vierbergenlars\SemVer\SemVerException;
-use \Michelf\Markdown;
+use Michelf\Markdown;
 
 class Application {
 
