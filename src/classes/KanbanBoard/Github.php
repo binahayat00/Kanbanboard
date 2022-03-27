@@ -1,5 +1,8 @@
 <?php
 
+use Github\Client;
+use Github\HttpClient\CachedHttpClient;
+
 class GithubClient
 {
     private $client;
@@ -9,10 +12,9 @@ class GithubClient
     public function __construct($token, $account)
     {
         $this->account = $account;
-        $this->client= new \Github\Client(new \Github\HttpClient\CachedHttpClient(array('cache_dir' => '/tmp/github-api-cache')));
-        $this->client->authenticate($token, \Github\Client::AUTH_HTTP_TOKEN);
+        $this->client = new Client(new CachedHttpClient(array('cache_dir' => '/tmp/github-api-cache')));
+        $this->client->authenticate($token, Client::AUTH_HTTP_TOKEN);
         $this->milestone_api = $this->client->api('issues')->milestones();
-
     }
 
     public function milestones($repository)
@@ -22,7 +24,10 @@ class GithubClient
 
     public function issues($repository, $milestone_id)
     {
-        $issue_parameters = array('milestone' => $milestone_id, 'state' => 'all');
+        $issue_parameters = [
+            'milestone' => $milestone_id,
+            'state' => 'all'
+        ];
         return $this->client->api('issue')->all($this->account, $repository, $issue_parameters);
     }
 }
