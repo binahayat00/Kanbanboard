@@ -80,8 +80,6 @@ class Authentication
 
 	public function _setTokenForLogin()
 	{
-		$trtr = $this->_checkTokenIsValid($_SESSION['gh-token']);
-		var_dump($trtr);die;
 		if (array_key_exists('gh-token', $_SESSION)) {
 			$token = $_SESSION['gh-token'];
 		} else if (
