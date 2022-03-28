@@ -24,8 +24,9 @@ class Authentication
 	public function login()
 	{
 		session_start();
+		$token = $this->_setTokenForLogin();
 		$this->logout();
-		$_SESSION['gh-token'] = $this->_setTokenForLogin();
+		$_SESSION['gh-token'] = $token;
 		return $_SESSION['gh-token'];
 	}
 
@@ -79,13 +80,14 @@ class Authentication
 
 	public function _setTokenForLogin()
 	{
-		$token = NULL;
+		$trtr = $this->_checkTokenIsValid($_SESSION['gh-token']);
+		var_dump($trtr);die;
 		if (array_key_exists('gh-token', $_SESSION)) {
 			$token = $_SESSION['gh-token'];
 		} else if (
-			Utilities::hasValue($_GET, 'code')
-			&& Utilities::hasValue($_GET, 'state')
-			&& $_SESSION['redirected']
+			Utilities::hasValue($_GET, 'code') && 
+			Utilities::hasValue($_GET, 'state') && 
+			$_SESSION['redirected']
 		) {
 			$_SESSION['redirected'] = false;
 			$token = $this->_returnsFromGithub($_GET['code']);
@@ -93,6 +95,25 @@ class Authentication
 			$_SESSION['redirected'] = true;
 			$this->_redirectToGithub();
 		}
-		return $token;
+
+		return (isset($token)) ? $token : NULL;
+	}
+
+	public function _checkTokenIsValid($token){
+		$core = '#\d*[ctYymd]+|\$\d+|[^#\$]+';
+		$expValidate = '/^('.$core.')+$/m';
+		$expTokenize = '/('.$core.')/m';
+
+		$token = "Hello";
+		if( ! preg_match_all( $expValidate, $token) )
+		{
+			return false;
+		}
+		if( preg_match_all( $expTokenize, $token, $tokens) ) {
+			foreach ( $tokens[0] as $token )
+				echo "\t\t'$token'\n";
+		}
+		return true;
+
 	}
 }
