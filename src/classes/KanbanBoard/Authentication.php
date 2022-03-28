@@ -98,22 +98,4 @@ class Authentication
 
 		return (isset($token)) ? $token : NULL;
 	}
-
-	public function _checkTokenIsValid($token){
-		$core = '#\d*[ctYymd]+|\$\d+|[^#\$]+';
-		$expValidate = '/^('.$core.')+$/m';
-		$expTokenize = '/('.$core.')/m';
-
-		$token = "Hello";
-		if( ! preg_match_all( $expValidate, $token) )
-		{
-			return false;
-		}
-		if( preg_match_all( $expTokenize, $token, $tokens) ) {
-			foreach ( $tokens[0] as $token )
-				echo "\t\t'$token'\n";
-		}
-		return true;
-
-	}
 }
