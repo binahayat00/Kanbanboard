@@ -1,8 +1,11 @@
 <?php
+
 namespace KanbanBoard;
+
 use KanbanBoard\Utilities;
 
-class Login {
+class Authentication
+{
 
 	private $client_id = NULL;
 	private $client_secret = NULL;
@@ -21,25 +24,9 @@ class Login {
 	public function login()
 	{
 		session_start();
-		$token = NULL;
-		if(array_key_exists('gh-token', $_SESSION)) {
-			$token = $_SESSION['gh-token'];
-		}
-		else if(Utilities::hasValue($_GET, 'code')
-			&& Utilities::hasValue($_GET, 'state')
-			&& $_SESSION['redirected'])
-		{
-			$_SESSION['redirected'] = false;
-			$token = $this->_returnsFromGithub($_GET['code']);
-		}
-		else
-		{
-			$_SESSION['redirected'] = true;
-			$this->_redirectToGithub();
-		}
 		$this->logout();
-		$_SESSION['gh-token'] = $token;
-		return $token;
+		$_SESSION['gh-token'] = $this->_setTokenForLogin();
+		return $_SESSION['gh-token'];
 	}
 
 	private function _redirectToGithub()
@@ -55,24 +42,57 @@ class Login {
 	private function _returnsFromGithub($code)
 	{
 		$url = 'https://github.com/login/oauth/access_token';
-		$data = array(
+		$options = $this->_buildParamsForGithubAccessToken($code);
+		$context = stream_context_create($options);
+		$result = file_get_contents($url, false, $context);
+		return $this->_buildResultForGithubAccessToken($result);
+	}
+
+	public function _buildParamsForGithubAccessToken($code)
+	{
+		$data = [
 			'code' => $code,
 			'state' => 'LKHYgbn776tgubkjhk',
 			'client_id' => $this->client_id,
-			'client_secret' => $this->client_secret);
-		$options = array(
-			'http' => array(
+			'client_secret' => $this->client_secret
+		];
+
+		$options = [
+			'http' => [
 				'method' => 'POST',
 				'header' => "Content-type: application/x-www-form-urlencoded\r\n",
 				'content' => http_build_query($data),
-			),
-		);
-		$context = stream_context_create($options);
-		$result = file_get_contents($url, false, $context);
+			],
+		];
+
+		return $options;
+	}
+
+	public function _buildResultForGithubAccessToken($result)
+	{
 		if ($result === FALSE)
-			die('Error');
+			die('Error: can not get data from access token.');
 		$result = explode('=', explode('&', $result)[0]);
 		array_shift($result);
 		return array_shift($result);
+	}
+
+	public function _setTokenForLogin()
+	{
+		$token = NULL;
+		if (array_key_exists('gh-token', $_SESSION)) {
+			$token = $_SESSION['gh-token'];
+		} else if (
+			Utilities::hasValue($_GET, 'code')
+			&& Utilities::hasValue($_GET, 'state')
+			&& $_SESSION['redirected']
+		) {
+			$_SESSION['redirected'] = false;
+			$token = $this->_returnsFromGithub($_GET['code']);
+		} else {
+			$_SESSION['redirected'] = true;
+			$this->_redirectToGithub();
+		}
+		return $token;
 	}
 }
