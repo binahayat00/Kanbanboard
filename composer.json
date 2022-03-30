@@ -10,13 +10,8 @@
 		"knplabs/github-api": "^1.5",
 		"michelf/php-markdown": "^1.6",
 		"phpunit/phpunit": "5.0.*",
-<<<<<<< HEAD
-		"vlucas/phpdotenv": "5.4.x-dev"
-=======
 		"vlucas/phpdotenv": "5.4.x-dev",
-		"psr/http-message": "1.0",
-		"guzzlehttp/guzzle": "7.4.x-dev"
->>>>>>> dcbcaad63f44b7dbfecd434f8bc7c271730f80b0
+		"phpunit/php-timer": "^5.0"
 	},
 	"minimum-stability": "dev"
 }

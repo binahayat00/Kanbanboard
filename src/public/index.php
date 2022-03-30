@@ -7,11 +7,11 @@ use KanbanBoard\Application;
 require __DIR__ .'/../classes/KanbanBoard/GithubClient.php';
 require __DIR__ .'/../classes/Utilities.php';
 require __DIR__ .'/../classes/KanbanBoard/Authentication.php';
+require __DIR__ .'/../../test/KarbanBoardTest.php';
 
 $repositories = explode('|', Utilities::env('GH_REPOSITORIES'));
 $Authentication = new Authentication();
 $token = $Authentication->login();
-
 $github = new GithubClient($token, Utilities::env('GH_ACCOUNT'));
 $board = new Application($github, $repositories, array('waiting-for-feedback'));
 $data = $board->board();
