@@ -9,8 +9,10 @@
 		"vierbergenlars/php-semver": "^3.0",
 		"knplabs/github-api": "^1.5",
 		"michelf/php-markdown": "^1.6",
-		"phpunit/phpunit": " ^7",
-		"vlucas/phpdotenv": "5.4.x-dev"
+		"phpunit/phpunit": "5.0.*",
+		"vlucas/phpdotenv": "5.4.x-dev",
+		"psr/http-message": "1.0",
+		"guzzlehttp/guzzle": "7.4.x-dev"
 	},
 	"minimum-stability": "dev"
 }
