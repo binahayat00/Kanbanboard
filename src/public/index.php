@@ -4,7 +4,7 @@ use KanbanBoard\Authentication;
 use KanbanBoard\Utilities;
 use KanbanBoard\Application;
 
-require __DIR__ .'/../classes/KanbanBoard/Github.php';
+require __DIR__ .'/../classes/KanbanBoard/GithubClient.php';
 require __DIR__ .'/../classes/Utilities.php';
 require __DIR__ .'/../classes/KanbanBoard/Authentication.php';
 

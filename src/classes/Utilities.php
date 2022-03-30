@@ -17,7 +17,7 @@ class Utilities
 		return (empty($value) && $default === NULL) ? die('Environment variable ' . $name . ' not found or has no value') : $value;
 	}
 
-	public static function hasValue($array, $key) {
+	public static function hasValue(array $array, $key) {
 		return is_array($array) && array_key_exists($key, $array) && !empty($array[$key]);
 	}
 
