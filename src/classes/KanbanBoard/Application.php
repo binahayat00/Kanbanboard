@@ -46,21 +46,21 @@ class Application
 	{
 		$getedIssues = $this->github->issues($repository, $milestone_id);
 
-		foreach ($getedIssues as $ii) {
-			if (isset($ii['pull_request']))
+		foreach ($getedIssues as $getedIssue) {
+			if (isset($getedIssue['pull_request']))
 				continue;
-			$issues[$ii['state'] === 'closed' ? 'completed' : (($ii['assignee']) ? 'active' : 'queued')][] = array(
-				'id' => $ii['id'], 'number' => $ii['number'],
-				'title'            	=> $ii['title'],
-				'body'             	=> Markdown::defaultTransform($ii['body']),
-				'url' => $ii['html_url'],
-				'assignee'         	=> (is_array($ii) && array_key_exists('assignee', $ii) && !empty($ii['assignee'])) ? $ii['assignee']['avatar_url'] . '?s=16' : NULL,
-				'paused'			=> self::labels_match($ii, $this->paused_labels),
+			$issues[$getedIssue['state'] === 'closed' ? 'completed' : (($getedIssue['assignee']) ? 'active' : 'queued')][] = array(
+				'id' => $getedIssue['id'], 'number' => $getedIssue['number'],
+				'title'            	=> $getedIssue['title'],
+				'body'             	=> Markdown::defaultTransform($getedIssue['body']),
+				'url' => $getedIssue['html_url'],
+				'assignee'         	=> (is_array($getedIssue) && array_key_exists('assignee', $getedIssue) && !empty($getedIssue['assignee'])) ? $getedIssue['assignee']['avatar_url'] . '?s=16' : NULL,
+				'paused'			=> self::labels_match($getedIssue, $this->paused_labels),
 				'progress'			=> self::_percent(
-					substr_count(strtolower($ii['body']), '[x]'),
-					substr_count(strtolower($ii['body']), '[ ]')
+					substr_count(strtolower($getedIssue['body']), '[x]'),
+					substr_count(strtolower($getedIssue['body']), '[ ]')
 				),
-				'closed'			=> $ii['closed_at']
+				'closed'			=> $getedIssue['closed_at']
 			);
 		}
 
