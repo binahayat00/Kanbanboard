@@ -15,21 +15,31 @@ class Application
 	}
 
 	public function board()
-	{
-		$ms = array();
+	{	
+		$getedMilestones = $this->getMilestonesInformation();
+		$milestones = $this->setParametersForBoard($getedMilestones);
+		return $milestones;
+	}
+
+	private function getMilestonesInformation(){
+		$result = array();
 		foreach ($this->repositories as $repository) {
 			foreach ($this->github->milestones($repository) as $data) {
-				$ms[$data['title']] = $data;
-				$ms[$data['title']]['repository'] = $repository;
+				$result[$data['title']] = $data;
+				$result[$data['title']]['repository'] = $repository;
 			}
 		}
-		ksort($ms);
-		$milestones = [];
-		foreach ($ms as $name => $data) {
+		ksort($result);
+		return $result;
+	}
+
+	private function setParametersForBoard($getedMilestones){
+		$result = [];
+		foreach ($getedMilestones as $name => $data) {
 			$issues = $this->issues($data['repository'], $data['number']);
 			$percent = self::_percent($data['closed_issues'], $data['open_issues']);
 			if ($percent) {
-				$milestones[] = array(
+				$result[] = array(
 					'milestone' => $name,
 					'url' => isset($data['html_url']) ? $data['html_url'] : null,
 					'progress' => $percent,
@@ -39,7 +49,7 @@ class Application
 				);
 			}
 		}
-		return $milestones;
+		return $result;
 	}
 
 	private function issues($repository, $milestone_id)

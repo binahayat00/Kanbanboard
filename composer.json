@@ -5,11 +5,13 @@
 		]
 	},
 	"require": {
-		"mustache/mustache": "^2.9",
+		"mustache/mustache": "dev-main",
 		"vierbergenlars/php-semver": "^3.0",
-		"knplabs/github-api": "^1.5",
-		"michelf/php-markdown": "^1.6",
-		"phpunit/phpunit": "5.0.*",
+		"knplabs/github-api": "3.0",
+		"symfony/http-client": "6.0.x-dev",
+		"nyholm/psr7": "^1.5",
+		"michelf/php-markdown": "dev-lib",
+		"phpunit/phpunit": "9.5.x-dev",
 		"vlucas/phpdotenv": "5.4.x-dev",
 		"phpunit/php-timer": "^5.0"
 	},

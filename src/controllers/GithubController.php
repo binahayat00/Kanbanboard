@@ -11,9 +11,6 @@ use GithubClient;
 
 class GithubController
 {
-    public function __construct()
-    {
-    }
 
     public function getRepositoriesGithubInEnv(){
         return Utilities::env('GH_REPOSITORIES');
@@ -32,42 +29,24 @@ class GithubController
         return $Authentication->login();
     }
 
-    public function newGithubClientObject($token,$account){
-        return new GithubClient($token,$account);
-    }
-
-    public function newApplicationObject($github, $repositories,$paused_labels = array('waiting-for-feedback')){
-        return new Application($github, $repositories, $paused_labels);
-    }
-
-    public function newMustacheLoaderFilesystemLoaderObject($route = __DIR__ .'/../views'){
-        return new Mustache_Loader_FilesystemLoader($route);
-    }
-
-    public function newMustacheEngineObject($loader){
-        return new Mustache_Engine(array(
-            'loader' => $loader,
-        ));
-    }
-
     public function getGithubData($repositories,$token,$account){
-        $github = $this->newGithubClientObject($token,$account);
-        $board = $this->newApplicationObject($github, $repositories);
+        $github = new GithubClient($token,$account);
+        $board = new Application($github, $repositories, $paused_labels = array('waiting-for-feedback'));
         return $board->board();
     }
 
-    public function getMustache($data){
-        $loader = $this->newMustacheLoaderFilesystemLoaderObject();
-        $mustache = $this->newMustacheEngineObject($loader);
+    public function getMustache($data,$route){
+        $loader = new Mustache_Loader_FilesystemLoader($route);
+        $mustache = new Mustache_Engine(['loader' => $loader]);
         return $mustache->render('index', array('milestones' => $data));
     }
 
-    public function run(){
+    public function getMilestones(){
         $repositories = $this->getRepositories();
         $token = $this->loginInGithub();
         $account = $this->getAccountGithubInEnv();
         $data = $this->getGithubData($repositories,$token,$account);
-        return $this->getMustache($data);
+        return $this->getMustache($data,$route = __DIR__ .'/../views');
     }
     
 }

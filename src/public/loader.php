@@ -1,10 +1,10 @@
 <?php
-use Controllers\GithubController;
+use Route\Handler;
 
-require __DIR__ .'/../bootstrap/app.php';
+require __DIR__ .'/../../bootstrap/app.php';
 
-$githubController = new GithubController();
+$githubController = new Handler();
 
-echo $githubController->run();
+echo $githubController->boot();
 
 

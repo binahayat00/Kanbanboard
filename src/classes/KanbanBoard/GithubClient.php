@@ -2,6 +2,7 @@
 
 use Github\Client;
 use Github\HttpClient\CachedHttpClient;
+use Symfony\Component\HttpClient\HttplugClient;
 
 class GithubClient
 {
@@ -12,8 +13,8 @@ class GithubClient
     public function __construct($token, $account)
     {
         $this->account = $account;
-        $this->client = new Client(new CachedHttpClient(array('cache_dir' => '/tmp/github-api-cache')));
-        $this->client->authenticate($token, Client::AUTH_HTTP_TOKEN);
+        $this->client = Client::createWithHttpClient(new HttplugClient());
+        $this->client->authenticate($token, null, Client::AUTH_CLIENT_ID);
         $this->milestone_api = $this->client->api('issues')->milestones();
     }
 
@@ -30,4 +31,5 @@ class GithubClient
         ];
         return $this->client->api('issue')->all($this->account, $repository, $issue_parameters);
     }
+    
 }
