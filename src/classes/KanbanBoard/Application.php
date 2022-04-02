@@ -15,13 +15,14 @@ class Application
 	}
 
 	public function board()
-	{	
+	{
 		$getedMilestones = $this->getMilestonesInformation();
 		$milestones = $this->setParametersForBoard($getedMilestones);
 		return $milestones;
 	}
 
-	private function getMilestonesInformation(){
+	private function getMilestonesInformation()
+	{
 		$result = array();
 		foreach ($this->repositories as $repository) {
 			foreach ($this->github->milestones($repository) as $data) {
@@ -33,7 +34,8 @@ class Application
 		return $result;
 	}
 
-	private function setParametersForBoard($getedMilestones){
+	private function setParametersForBoard($getedMilestones)
+	{
 		$result = [];
 		foreach ($getedMilestones as $name => $data) {
 			$issues = $this->issues($data['repository'], $data['number']);
@@ -55,7 +57,30 @@ class Application
 	private function issues($repository, $milestone_id)
 	{
 		$getedIssues = $this->github->issues($repository, $milestone_id);
+		$issues = $this->setIssuesArray($getedIssues);
+		return $this->setResultOfIssue($issues);
+	}
 
+	private function setResultOfIssue($issues)
+	{
+		if (isset($issues['active'])) {
+			usort($issues['active'], function ($a, $b) {
+				return $this->differencePausedsOrTitles($a, $b);
+			});
+			return $issues;
+		} else if (isset($issues))
+			return $issues;
+		else
+			return null;
+	}
+
+	private function differencePausedsOrTitles($a, $b)
+	{
+		return count($a['paused']) - count($b['paused']) === 0 ? strcmp($a['title'], $b['title']) : count($a['paused']) - count($b['paused']);
+	}
+
+	private function setIssuesArray($getedIssues)
+	{
 		foreach ($getedIssues as $getedIssue) {
 			if (isset($getedIssue['pull_request']))
 				continue;
@@ -73,16 +98,7 @@ class Application
 				'closed'			=> $getedIssue['closed_at']
 			);
 		}
-
-		if (isset($issues['active'])) {
-			usort($issues['active'], function ($a, $b) {
-				return count($a['paused']) - count($b['paused']) === 0 ? strcmp($a['title'], $b['title']) : count($a['paused']) - count($b['paused']);
-			});
-			return $issues;
-		} else if (isset($issues))
-			return $issues;
-		else
-			return null;
+		return $issues;
 	}
 
 	private static function _state($issue)
