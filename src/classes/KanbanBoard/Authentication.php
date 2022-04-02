@@ -35,14 +35,14 @@ class Authentication
 		$url = 'Location: https://github.com/login/oauth/authorize';
 		$url .= '?client_id=' . $this->client_id;
 		$url .= '&scope=repo';
-		$url .= '&state=LKHYgbn776tgubkjhk';
+		$url .= '&state='.STATE;
 		header($url);
 		exit();
 	}
 
 	private function _returnsFromGithub($code)
 	{
-		$url = 'https://github.com/login/oauth/access_token';
+		$url = ACCESS_TOKEN_LINK;
 		$options = $this->_buildParamsForGithubAccessToken($code);
 		$context = stream_context_create($options);
 		$result = file_get_contents($url, false, $context);
@@ -53,7 +53,7 @@ class Authentication
 	{
 		$data = [
 			'code' => $code,
-			'state' => 'LKHYgbn776tgubkjhk',
+			'state' => STATE,
 			'client_id' => $this->client_id,
 			'client_secret' => $this->client_secret
 		];
@@ -65,7 +65,6 @@ class Authentication
 				'content' => http_build_query($data),
 			],
 		];
-
 		return $options;
 	}
 

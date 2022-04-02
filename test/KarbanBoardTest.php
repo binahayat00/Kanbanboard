@@ -10,7 +10,7 @@ class KarbanBoardTest extends TestCase
     public function testrunproject()
     {
         $githubController = new GithubController();
-        $response = $githubController->gettest();
+        $response = $githubController->getRepositories()();
         var_dump($response);die;
         $response = $this->getStatus('/');
         //var_dump($response);die;
