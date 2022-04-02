@@ -1,8 +1,9 @@
 <?php
 
-namespace KanbanBoard;
+namespace App\Classes\KanbanBoard;
 
 use Michelf\Markdown;
+use App\Classes\Utilities;
 
 class Application
 {

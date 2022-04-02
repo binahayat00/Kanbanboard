@@ -1,8 +1,8 @@
 <?php
 
-namespace Route;
+namespace App\Route;
 
-use Controllers\GithubController;
+use App\Controllers\GithubController;
 
 class Handler {
 

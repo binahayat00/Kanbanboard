@@ -1,7 +1,7 @@
 <?php
+namespace App\Classes\KanbanBoard;
 
 use Github\Client;
-use Github\HttpClient\CachedHttpClient;
 use Symfony\Component\HttpClient\HttplugClient;
 
 class GithubClient

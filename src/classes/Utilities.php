@@ -1,6 +1,6 @@
 <?php
 
-namespace KanbanBoard;
+namespace App\Classes;
 
 class Utilities
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace KanbanBoard;
+namespace App\Classes\KanbanBoard;
 
-use KanbanBoard\Utilities;
+use App\Classes\Utilities;
 
 class Authentication
 {

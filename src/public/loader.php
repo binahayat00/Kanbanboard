@@ -1,10 +1,11 @@
 <?php
-use Route\Handler;
+
+use App\Route\Handler;
 
 require __DIR__ .'/../../bootstrap/app.php';
+require __DIR__ .'/../route/handler.php';
 
-$githubController = new Handler();
-
-echo $githubController->boot();
+$handler = new Handler();
+echo $handler->boot();
 
 

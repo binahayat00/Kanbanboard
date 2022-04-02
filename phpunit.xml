@@ -4,8 +4,22 @@
     stopOnFailure="false">
 
     <testsuites>
-        <testsuite name="Calculator">
+        <testsuite name="KarbanBoard">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <env name="APP_ENV" value="testing"/><!-- $_ENV['APP_ENV'] -->
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="CACHE_DRIVER" value="array"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="MAIL_DRIVER" value="array"/>
+        <env name="GH_CLIENT_ID" value="c26742bf942ef65b2b83"/>
+        <env name="GH_CLIENT_SECRET" value="01fbf8291d3e3d8d5e8914cade6601d2996b3b39"/>
+        <env name="GH_ACCOUNT" value="amirrezazare59"/>
+        <env name="GH_REPOSITORIES" value="project1"/>
+        <!-- <env name="DB_CONNECTION" value="sqlite"/> -->
+        <!-- <env name="DB_DATABASE" value=":memory:"/> -->
+    </php>
 </phpunit>

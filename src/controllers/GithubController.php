@@ -1,13 +1,13 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
 use Mustache_Loader_FilesystemLoader;
-use KanbanBoard\Authentication;
-use KanbanBoard\Application;
-use KanbanBoard\Utilities;
+use App\Classes\KanbanBoard\Authentication;
+use App\Classes\KanbanBoard\Application;
+use App\Classes\Utilities;
 use Mustache_Engine;
-use GithubClient;
+use App\Classes\KanbanBoard\GithubClient;
 
 class GithubController
 {
