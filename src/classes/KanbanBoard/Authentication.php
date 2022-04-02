@@ -49,7 +49,7 @@ class Authentication
 		return $this->_buildResultForGithubAccessToken($result);
 	}
 
-	public function _buildParamsForGithubAccessToken($code)
+	private function _buildParamsForGithubAccessToken($code)
 	{
 		$data = [
 			'code' => $code,
@@ -69,7 +69,7 @@ class Authentication
 		return $options;
 	}
 
-	public function _buildResultForGithubAccessToken($result)
+	private function _buildResultForGithubAccessToken($result)
 	{
 		if ($result === FALSE)
 			die('Error: can not get data from access token.');
@@ -78,7 +78,7 @@ class Authentication
 		return array_shift($result);
 	}
 
-	public function _setTokenForLogin()
+	private function _setTokenForLogin()
 	{
 		if (array_key_exists('gh-token', $_SESSION)) {
 			$token = $_SESSION['gh-token'];

@@ -1535,12 +1535,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "120e079cd4fb82a79ffd134d19f1266bc11f9c33"
+                "reference": "f8853c984a5e8e34596c9fc3be6a28474edfae7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/120e079cd4fb82a79ffd134d19f1266bc11f9c33",
-                "reference": "120e079cd4fb82a79ffd134d19f1266bc11f9c33",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/f8853c984a5e8e34596c9fc3be6a28474edfae7e",
+                "reference": "f8853c984a5e8e34596c9fc3be6a28474edfae7e",
                 "shasum": ""
             },
             "require": {
@@ -1604,7 +1604,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-31T06:18:13+00:00"
+            "time": "2022-04-02T15:48:11+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1853,12 +1853,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "5e06be79ad152b7a794ca2855fffa8a098410410"
+                "reference": "be559f535071dcf1dd78b19804f9f8f318023f5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5e06be79ad152b7a794ca2855fffa8a098410410",
-                "reference": "5e06be79ad152b7a794ca2855fffa8a098410410",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/be559f535071dcf1dd78b19804f9f8f318023f5d",
+                "reference": "be559f535071dcf1dd78b19804f9f8f318023f5d",
                 "shasum": ""
             },
             "require": {
@@ -1948,7 +1948,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-31T06:17:08+00:00"
+            "time": "2022-04-02T15:49:21+00:00"
         },
         {
             "name": "psr/cache",
@@ -3305,12 +3305,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "8272de54e7eb916cf11d7e0be5fe5b05866d8251"
+                "reference": "a7930c47248b9b57e9d0b8da100ffc1e031536dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/8272de54e7eb916cf11d7e0be5fe5b05866d8251",
-                "reference": "8272de54e7eb916cf11d7e0be5fe5b05866d8251",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/a7930c47248b9b57e9d0b8da100ffc1e031536dc",
+                "reference": "a7930c47248b9b57e9d0b8da100ffc1e031536dc",
                 "shasum": ""
             },
             "require": {
@@ -3381,7 +3381,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-31T17:18:25+00:00"
+            "time": "2022-04-01T12:27:43+00:00"
         },
         {
             "name": "symfony/http-client-contracts",

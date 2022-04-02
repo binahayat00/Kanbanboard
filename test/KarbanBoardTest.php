@@ -1,16 +1,20 @@
 <?php
+
 namespace test;
-use \PHPUnit_Framework_TestCase;
-use \PHPUnit_Framework_Assert;
+
+use Controllers\GithubController;
 use \PHPUnit\Framework\TestCase;
-use \PHPUnit\Framework\Assert;
 
 class KarbanBoardTest extends TestCase
 {
-    public function testFailure()
+    public function testrunproject()
     {
+        $githubController = new GithubController();
+        $response = $githubController->gettest();
+        var_dump($response);die;
         $response = $this->getStatus('/');
-        $this->assertTrue(true == true);
+        //var_dump($response);die;
+        $this->assertTrue($response == 200);
     }
 }
 ?>
