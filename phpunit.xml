@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<phpunit bootstrap="vendor/autoload.php"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+bootstrap="vendor/autoload.php"
     colors="true"
     stopOnFailure="false">
 
@@ -9,17 +11,17 @@
         </testsuite>
     </testsuites>
     <php>
-        <env name="APP_ENV" value="testing"/><!-- $_ENV['APP_ENV'] -->
+        <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
         <env name="MAIL_DRIVER" value="array"/>
-        <env name="GH_CLIENT_ID" value="c26742bf942ef65b2b83"/>
-        <env name="GH_CLIENT_SECRET" value="01fbf8291d3e3d8d5e8914cade6601d2996b3b39"/>
-        <env name="GH_ACCOUNT" value="amirrezazare59"/>
-        <env name="GH_REPOSITORIES" value="project1"/>
+        <env name="GH_CLIENT_ID" value=""/>
+        <env name="GH_CLIENT_SECRET" value=""/>
+        <env name="GH_ACCOUNT" value=""/>
+        <env name="GH_REPOSITORIES" value=""/>
         <!-- <env name="DB_CONNECTION" value="sqlite"/> -->
-        <!-- <env name="DB_DATABASE" value=":memory:"/> -->
+        <!-- <env name="DB_DATABASE" value=":memory:"/>
     </php>
 </phpunit>
