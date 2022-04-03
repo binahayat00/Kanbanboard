@@ -16,18 +16,21 @@ class Authentication
 		$this->client_secret = Utilities::env('GH_CLIENT_SECRET');
 	}
 
-	public function logout()
-	{
-		unset($_SESSION['gh-token']);
-	}
-
 	public function login()
 	{
-		session_start();
+		if( empty(session_id()) && !headers_sent())
+			session_start();	
+		else
+			$_SESSION=[];
 		$token = $this->_setTokenForLogin();
 		$this->logout();
 		$_SESSION['gh-token'] = $token;
-		return $_SESSION['gh-token'];
+		return $token;
+	}
+
+	public function logout()
+	{
+		unset($_SESSION['gh-token']);
 	}
 
 	private function _redirectToGithub()
@@ -35,14 +38,14 @@ class Authentication
 		$url = 'Location: https://github.com/login/oauth/authorize';
 		$url .= '?client_id=' . $this->client_id;
 		$url .= '&scope=repo';
-		$url .= '&state='.STATE;
+		$url .= '&state=' . 'LKHYgbn776tgubkjhk';
 		header($url);
 		exit();
 	}
 
 	private function _returnsFromGithub($code)
 	{
-		$url = ACCESS_TOKEN_LINK;
+		$url = 'https://github.com/login/oauth/access_token';
 		$options = $this->_buildParamsForGithubAccessToken($code);
 		$context = stream_context_create($options);
 		$result = file_get_contents($url, false, $context);
@@ -53,7 +56,7 @@ class Authentication
 	{
 		$data = [
 			'code' => $code,
-			'state' => STATE,
+			'state' => 'LKHYgbn776tgubkjhk',
 			'client_id' => $this->client_id,
 			'client_secret' => $this->client_secret
 		];
@@ -96,3 +99,5 @@ class Authentication
 		return (isset($token)) ? $token : NULL;
 	}
 }
+
+?>

@@ -1,22 +1,32 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace test;
+namespace Tests;
 
 use App\Controllers\GithubController;
 use Dotenv\Dotenv;
-use \PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class KarbanBoardTest extends TestCase
 {
 
-    public function testrunproject()
+    public function testGetRepositoriesGithubInEnv()
     {
-        var_dump($_ENV);die;
         $githubController = new GithubController();
-        $response = $githubController->getMilestones();
-        $response = $this->getStatus('/');
-        //var_dump($response);die;
-        $this->assertTrue($response == 200);
+        $response = $githubController->getRepositoriesGithubInEnv();
+        $this->assertEquals($_ENV['GH_REPOSITORIES'] ,$response);
     }
+
+    public function testGetAccountGithubInEnv(){
+        $githubController = new GithubController();
+        $response = $githubController->getAccountGithubInEnv();
+        $this->assertEquals($_ENV['GH_ACCOUNT'] ,$response);
+    }
+
+    public function testGetRepositories(){
+        $githubController = new GithubController();
+        $response = $githubController->getRepositories();
+        $this->assertIsArray($response);
+    }
+    
 }
 ?>

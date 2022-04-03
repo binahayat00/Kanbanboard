@@ -48,9 +48,5 @@ class GithubController
         $data = $this->getGithubData($repositories,$token,$account);
         return $this->getMustache($data,$route = __DIR__ .'/../views');
     }
-
-    public function gettest(){
-        return "test";
-    }
     
 }
