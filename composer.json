@@ -4,7 +4,8 @@
 			"App\\": "src/",
 			"Config\\": "config/",
 			"Tests\\": "tests/",
-			"Lib\\": "Lib/"
+			"Lib\\": "lib/",
+			"Public\\": "public/"
 		}
 	},
 	"require": {
