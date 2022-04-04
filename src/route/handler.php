@@ -3,11 +3,10 @@
 namespace App\Route;
 
 use App\Controllers\GithubController;
-use Lib\Response;
 use Lib\Router;
 
 class Handler {
-    
+
     protected $result;
     public function __construct()
     {
