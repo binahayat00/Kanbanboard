@@ -7,11 +7,13 @@ use Lib\Response;
 use Lib\Router;
 
 class Handler {
+    
     protected $result;
     public function __construct()
     {
         $this->result;
     }
+
     public function boot(){
 
         //every route
