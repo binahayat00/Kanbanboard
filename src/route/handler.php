@@ -13,7 +13,7 @@ class Handler {
         $this->result;
     }
 
-    public function boot(){
+    public function run(){
 
         //every route
         Router::get($_SERVER['REQUEST_URI'], function () {
