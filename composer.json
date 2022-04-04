@@ -3,11 +3,15 @@
 		"psr-4":{
 			"App\\": "src/",
 			"Config\\": "config/",
-			"Tests\\": "tests/",
 			"Lib\\": "lib/",
 			"Public\\": "public/"
 		}
 	},
+	"autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
 	"require": {
 		"mustache/mustache": "dev-main",
 		"vierbergenlars/php-semver": "^3.0",
