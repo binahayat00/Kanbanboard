@@ -3,30 +3,36 @@
 namespace Tests;
 
 use App\Controllers\GithubController;
-use Dotenv\Dotenv;
 use PHPUnit\Framework\TestCase;
 
 class KarbanBoardTest extends TestCase
 {
+    protected $githubController;
+    protected function setUp(): void{
+        $this->githubController = new GithubController();
+    }
 
     public function testGetRepositoriesGithubInEnv()
     {
-        $githubController = new GithubController();
-        $response = $githubController->getRepositoriesGithubInEnv();
+        $response = $this->githubController->getRepositoriesGithubInEnv();
         $this->assertEquals($_ENV['GH_REPOSITORIES'] ,$response);
     }
 
     public function testGetAccountGithubInEnv(){
-        $githubController = new GithubController();
-        $response = $githubController->getAccountGithubInEnv();
+        $response = $this->githubController->getAccountGithubInEnv();
         $this->assertEquals($_ENV['GH_ACCOUNT'] ,$response);
     }
 
     public function testGetRepositories(){
-        $githubController = new GithubController();
-        $response = $githubController->getRepositories();
+        $response = $this->githubController->getRepositories();
         $this->assertIsArray($response);
     }
-    
+
+    public function testLoginInGithub(){
+        \session_start();
+        \session_create_id();
+        $response = $this->githubController->loginInGithub();
+        $this->assertIsArray($response);
+    }
 }
 ?>
