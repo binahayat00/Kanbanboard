@@ -20,7 +20,8 @@
 		"michelf/php-markdown": "dev-lib",
 		"phpunit/phpunit": "9.5.x-dev",
 		"vlucas/phpdotenv": "5.4.x-dev",
-		"phpunit/php-timer": "^5.0"
+		"phpunit/php-timer": "^5.0",
+		"illuminated/testing-tools": "dev-master"
 	},
 	"minimum-stability": "dev"
 }

@@ -25,6 +25,7 @@ class Authentication
 		$token = $this->_setTokenForLogin();
 		$this->logout();
 		$_SESSION['gh-token'] = $token;
+		
 		return $token;
 	}
 
@@ -33,10 +34,11 @@ class Authentication
 		unset($_SESSION['gh-token']);
 	}
 
-	private function _redirectToGithub()
+	public function _redirectToGithub($client_id = null)
 	{
+		$client_id = ($client_id) ? $client_id : $this->client_id;
 		$url = 'Location: https://github.com/login/oauth/authorize';
-		$url .= '?client_id=' . $this->client_id;
+		$url .= '?client_id=' . $client_id;
 		$url .= '&scope=repo';
 		$url .= '&state=' . 'LKHYgbn776tgubkjhk';
 		header($url);
@@ -80,7 +82,7 @@ class Authentication
 		return array_shift($result);
 	}
 
-	private function _setTokenForLogin()
+	public function _setTokenForLogin()
 	{
 		if (array_key_exists('gh-token', $_SESSION)) {
 			$token = $_SESSION['gh-token'];

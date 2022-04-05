@@ -15,10 +15,12 @@ class Handler {
 
     public function run(){
 
-        //every route
-        Router::get($_SERVER['REQUEST_URI'], function () {
+        Router::get('/', function () {
              $this->result = (new GithubController())->getMilestones();
         });
+
+        //if wad not '/' route
+        $this->result = ($this->result) ? $this->result : (new GithubController())->getMilestones();
 
         return $this->result;
     }
