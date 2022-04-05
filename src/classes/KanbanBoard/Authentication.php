@@ -20,8 +20,6 @@ class Authentication
 	{
 		if( empty(session_id()) && !headers_sent())
 			session_start();	
-		else
-			$_SESSION=[];
 		$token = $this->_setTokenForLogin();
 		$this->logout();
 		$_SESSION['gh-token'] = $token;
@@ -42,7 +40,7 @@ class Authentication
 		$url .= '&scope=repo';
 		$url .= '&state=' . 'LKHYgbn776tgubkjhk';
 		header($url);
-		exit();
+		// exit();
 	}
 
 	private function _returnsFromGithub($code)
