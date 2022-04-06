@@ -31,7 +31,6 @@ class Authentication
 		$token = $this->_setTokenForLogin();
 		$this->logout();
 		$_SESSION['gh-token'] = $token;
-		
 		return $token;
 	}
 
@@ -49,10 +48,12 @@ class Authentication
 		$url .= '&state=' . $this->state;
 		header($url);
 		try {
-			exit('return test');
+			throw new Exception($url);
 		}
 		catch (Exception $e) {
-			var_dump('var_dump test:'.$e);
+			echo $e->getMessage().'  ';
+			echo $e->getCode();
+			return;
 		}
 	}
 
@@ -94,8 +95,8 @@ class Authentication
 	}
 
 	public function _setTokenForLogin()
-	{
-		if (array_key_exists('gh-token', $_SESSION)) {
+	{	
+		if (array_key_exists('gh-token', $_SESSION) && ($_SESSION['gh-token'])) {
 			$token = $_SESSION['gh-token'];
 		} else if (
 			Utilities::hasValue($_GET, 'code') && 
@@ -108,7 +109,6 @@ class Authentication
 			$_SESSION['redirected'] = true;
 			$this->_redirectToGithub();
 		}
-
 		return (isset($token)) ? $token : NULL;
 	}
 }

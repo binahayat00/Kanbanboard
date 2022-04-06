@@ -31,10 +31,13 @@ class KarbanBoardTest extends TestCase
     }
 
     public function testLogin(){
-        $response = $this->githubController->loginInGithub();
-        $this->expectException('return test');
-
-        $this->assertTrue(true);
+        try {
+            $this->githubController->loginInGithub();
+            $this->assertTrue(true);
+        } catch (\Exception $e) {
+            $this->assertSame(0, $e->getCode());
+            return;
+        }
     }
     
 }
