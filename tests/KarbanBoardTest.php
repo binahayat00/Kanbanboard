@@ -10,6 +10,7 @@ class KarbanBoardTest extends TestCase
     protected $githubController;
     protected function setUp(): void{
         parent::setUp();
+        $_SESSION=[];
         $this->githubController = new GithubController();
     }
 
@@ -30,9 +31,8 @@ class KarbanBoardTest extends TestCase
     }
 
     public function testLogin(){
-        $_SESSION=[];
-        //$this->expectException("Exception");
         $response = $this->githubController->loginInGithub();
+        $this->expectException('return test');
 
         $this->assertTrue(true);
     }

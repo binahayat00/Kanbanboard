@@ -52,7 +52,7 @@ class Authentication
 			exit('return test');
 		}
 		catch (Exception $e) {
-			var_dump('var_dump test');die;
+			var_dump('var_dump test:'.$e);
 		}
 	}
 
