@@ -3,17 +3,25 @@
 namespace App\Classes\KanbanBoard;
 
 use App\Classes\Utilities;
+use Exception;
+use Lib\Config;
 
 class Authentication
 {
 
 	private $client_id = NULL;
 	private $client_secret = NULL;
+	private $authorize_link = NULL;
+	private $access_token_link = NULL;
+	private $state = NULL;
 
 	public function __construct()
 	{
 		$this->client_id = Utilities::env('GH_CLIENT_ID');
 		$this->client_secret = Utilities::env('GH_CLIENT_SECRET');
+		$this->authorize_link = Config::get('AUTHORIZE_LINK');
+		$this->access_token_link = Config::get('ACCESS_TOKEN_LINK');
+		$this->state = Config::get('STATE');
 	}
 
 	public function login()
@@ -35,17 +43,22 @@ class Authentication
 	public function _redirectToGithub($client_id = null)
 	{
 		$client_id = ($client_id) ? $client_id : $this->client_id;
-		$url = 'Location: https://github.com/login/oauth/authorize';
+		$url = 'Location: '.$this->authorize_link;
 		$url .= '?client_id=' . $client_id;
 		$url .= '&scope=repo';
-		$url .= '&state=' . 'LKHYgbn776tgubkjhk';
+		$url .= '&state=' . $this->state;
 		header($url);
-		// exit();
+		try {
+			exit();
+		}
+		catch (Exception $e) {
+			return $e->getMessage();
+		}
 	}
 
 	private function _returnsFromGithub($code)
 	{
-		$url = 'https://github.com/login/oauth/access_token';
+		$url = $this->access_token_link;
 		$options = $this->_buildParamsForGithubAccessToken($code);
 		$context = stream_context_create($options);
 		$result = file_get_contents($url, false, $context);
@@ -56,7 +69,7 @@ class Authentication
 	{
 		$data = [
 			'code' => $code,
-			'state' => 'LKHYgbn776tgubkjhk',
+			'state' => $this->state,
 			'client_id' => $this->client_id,
 			'client_secret' => $this->client_secret
 		];
