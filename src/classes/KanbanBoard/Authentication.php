@@ -49,10 +49,10 @@ class Authentication
 		$url .= '&state=' . $this->state;
 		header($url);
 		try {
-			exit();
+			exit('return test');
 		}
 		catch (Exception $e) {
-			return $e->getMessage();
+			var_dump('var_dump test');die;
 		}
 	}
 
