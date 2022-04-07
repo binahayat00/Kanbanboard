@@ -13,9 +13,17 @@ class GithubClient
     public function __construct($token, $account)
     {
         $this->account = $account;
-        $this->client = Client::createWithHttpClient(new HttplugClient());
+        $this->client = $this->setClient();
+        $this->milestone_api = $this->setMilestoneApi($token);
+    }
+
+    private function setClient(){
+        return Client::createWithHttpClient(new HttplugClient());
+    }
+
+    private function setMilestoneApi($token){
         $this->client->authenticate($token, null, Client::AUTH_CLIENT_ID);
-        $this->milestone_api = $this->client->api('issues')->milestones();
+        return $this->client->api('issues')->milestones();
     }
 
     public function milestones($repository)

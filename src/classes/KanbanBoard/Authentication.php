@@ -24,12 +24,13 @@ class Authentication
 		$this->access_token_link = Config::get('ACCESS_TOKEN_LINK');
 		$this->state = Config::get('STATE');
 		$this->scope = Config::get('SCOPE');
+		$this->header = "Content-type: application/x-www-form-urlencoded\r\n";
 	}
 
 	public function login()
 	{
-		if( empty(session_id()) && !headers_sent())
-			session_start();	
+		if (empty(session_id()) && !headers_sent())
+			session_start();
 		$token = $this->_setTokenForLogin();
 		$this->logout();
 		$_SESSION['gh-token'] = $token;
@@ -44,16 +45,15 @@ class Authentication
 	private function _redirectToGithub($client_id = null)
 	{
 		$client_id = ($client_id) ? $client_id : $this->client_id;
-		$url = 'Location: '.$this->authorize_link;
+		$url = 'Location: ' . $this->authorize_link;
 		$url .= '?client_id=' . $client_id;
 		$url .= '&scope=' . $this->scope;
 		$url .= '&state=' . $this->state;
 		header($url);
 		try {
 			throw new Exception($url);
-		}
-		catch (Exception $e) {
-			echo $e->getMessage().'  ';
+		} catch (Exception $e) {
+			echo $e->getMessage() . '  ';
 			echo $e->getCode();
 			return;
 		}
@@ -80,7 +80,7 @@ class Authentication
 		$options = [
 			'http' => [
 				'method' => 'POST',
-				'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+				'header' => $this->header,
 				'content' => http_build_query($data),
 			],
 		];
@@ -90,29 +90,38 @@ class Authentication
 	private function _buildResultForGithubAccessToken($result)
 	{
 		if ($result === FALSE)
-			die('Error: can not get data from access token.');
+			throw new Exception('Error: can not get data from access token.');
+
 		$result = explode('=', explode('&', $result)[0]);
 		array_shift($result);
 		return array_shift($result);
 	}
 
 	private function _setTokenForLogin()
-	{	
-		if (array_key_exists('gh-token', $_SESSION) && ($_SESSION['gh-token'])) {
+	{
+		if ($this->getTokenFromSessionConditions()) {
 			$token = $_SESSION['gh-token'];
-		} else if (
-			Utilities::hasValue($_GET, 'code') && 
-			Utilities::hasValue($_GET, 'state') && 
-			$_SESSION['redirected']
-		) {
+		} else if ($this->returnsFromGithubConditions()) {
 			$_SESSION['redirected'] = false;
 			$token = $this->_returnsFromGithub($_GET['code']);
 		} else {
 			$_SESSION['redirected'] = true;
 			$this->_redirectToGithub();
 		}
+
 		return (isset($token)) ? $token : NULL;
 	}
-}
 
-?>
+	private function getTokenFromSessionConditions()
+	{
+		return (array_key_exists('gh-token', $_SESSION) && ($_SESSION['gh-token']));
+	}
+
+	private function returnsFromGithubConditions()
+	{
+		return (Utilities::hasValue($_GET, 'code') &&
+			Utilities::hasValue($_GET, 'state') &&
+			$_SESSION['redirected']
+		);
+	}
+}

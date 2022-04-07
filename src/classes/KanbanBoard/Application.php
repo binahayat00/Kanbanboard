@@ -8,7 +8,7 @@ use App\Classes\Utilities;
 class Application
 {
 
-	public function __construct($github, $repositories, $paused_labels = array())
+	public function __construct($github, $repositories, $paused_labels = [])
 	{
 		$this->github = $github;
 		$this->repositories = $repositories;
@@ -24,7 +24,7 @@ class Application
 
 	private function getMilestonesInformation()
 	{
-		$result = array();
+		$result = [];
 		foreach ($this->repositories as $repository) {
 			foreach ($this->github->milestones($repository) as $data) {
 				$result[$data['title']] = $data;
