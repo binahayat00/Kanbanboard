@@ -42,14 +42,14 @@ class Application
 			$issues = $this->issues($data['repository'], $data['number']);
 			$percent = self::_percent($data['closed_issues'], $data['open_issues']);
 			if ($percent) {
-				$result[] = array(
+				$result[] = [
 					'milestone' => $name,
 					'url' => isset($data['html_url']) ? $data['html_url'] : null,
 					'progress' => $percent,
 					'queued' => isset($issues['queued']) ? $issues['queued'] : null,
 					'active' => isset($issues['active']) ? $issues['active'] : null,
 					'completed' => isset($issues['completed']) ? $issues['completed'] : null,
-				);
+				];
 			}
 		}
 		return $result;
@@ -85,21 +85,31 @@ class Application
 		foreach ($getedIssues as $getedIssue) {
 			if (isset($getedIssue['pull_request']))
 				continue;
-			$issues[$getedIssue['state'] === 'closed' ? 'completed' : (($getedIssue['assignee']) ? 'active' : 'queued')][] = array(
-				'id' => $getedIssue['id'], 'number' => $getedIssue['number'],
-				'title'            	=> $getedIssue['title'],
-				'body'             	=> Markdown::defaultTransform($getedIssue['body']),
-				'url' => $getedIssue['html_url'],
-				'assignee'         	=> (is_array($getedIssue) && array_key_exists('assignee', $getedIssue) && !empty($getedIssue['assignee'])) ? $getedIssue['assignee']['avatar_url'] . '?s=16' : NULL,
-				'paused'			=> self::labels_match($getedIssue, $this->paused_labels),
-				'progress'			=> self::_percent(
-					substr_count(strtolower($getedIssue['body']), '[x]'),
-					substr_count(strtolower($getedIssue['body']), '[ ]')
-				),
-				'closed'			=> $getedIssue['closed_at']
-			);
+			$issues[$getedIssue['state'] === 'closed' ? 'completed' : (($getedIssue['assignee']) ? 'active' : 'queued')][] = $this->setIndexOfIssuesArray($getedIssue);
 		}
 		return $issues;
+	}
+
+	private function setIndexOfIssuesArray($getedIssue)
+	{
+		return [
+			'id' => $getedIssue['id'], 'number' => $getedIssue['number'],
+			'title'            	=> $getedIssue['title'],
+			'body'             	=> Markdown::defaultTransform($getedIssue['body']),
+			'url' => $getedIssue['html_url'],
+			'assignee'         	=> $this->setAssigneeForIssues($getedIssue),
+			'paused'			=> self::labels_match($getedIssue, $this->paused_labels),
+			'progress'			=> self::_percent(
+				substr_count(strtolower($getedIssue['body']), '[x]'),
+				substr_count(strtolower($getedIssue['body']), '[ ]')
+			),
+			'closed'			=> $getedIssue['closed_at']
+		];
+	}
+
+	private function setAssigneeForIssues($getedIssue)
+	{
+		return (is_array($getedIssue) && array_key_exists('assignee', $getedIssue) && !empty($getedIssue['assignee'])) ? $getedIssue['assignee']['avatar_url'] . '?s=16' : NULL;
 	}
 
 	private static function _state($issue)
@@ -115,13 +125,13 @@ class Application
 	private static function labels_match($issue, $needles)
 	{
 		if (Utilities::hasValue($issue, 'labels')) {
+
 			foreach ($issue['labels'] as $label) {
-				if (in_array($label['name'], $needles)) {
-					return array($label['name']);
-				}
+				if (in_array($label['name'], $needles))
+					return [$label['name']];
 			}
 		}
-		return array();
+		return [];
 	}
 
 	private static function _percent($complete, $remaining)
@@ -129,13 +139,13 @@ class Application
 		$total = $complete + $remaining;
 		if ($total > 0) {
 			$percent = ($complete or $remaining) ? round($complete / $total * 100) : 0;
-			return array(
+			return [
 				'total' => $total,
 				'complete' => $complete,
 				'remaining' => $remaining,
 				'percent' => $percent
-			);
+			];
 		}
-		return array();
+		return [];
 	}
 }

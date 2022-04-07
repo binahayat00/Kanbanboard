@@ -14,6 +14,7 @@ class Authentication
 	private $authorize_link = NULL;
 	private $access_token_link = NULL;
 	private $state = NULL;
+	private $scope = NULL;
 
 	public function __construct()
 	{
@@ -22,6 +23,7 @@ class Authentication
 		$this->authorize_link = Config::get('AUTHORIZE_LINK');
 		$this->access_token_link = Config::get('ACCESS_TOKEN_LINK');
 		$this->state = Config::get('STATE');
+		$this->scope = Config::get('SCOPE');
 	}
 
 	public function login()
@@ -34,17 +36,17 @@ class Authentication
 		return $token;
 	}
 
-	public function logout()
+	private function logout()
 	{
 		unset($_SESSION['gh-token']);
 	}
 
-	public function _redirectToGithub($client_id = null)
+	private function _redirectToGithub($client_id = null)
 	{
 		$client_id = ($client_id) ? $client_id : $this->client_id;
 		$url = 'Location: '.$this->authorize_link;
 		$url .= '?client_id=' . $client_id;
-		$url .= '&scope=repo';
+		$url .= '&scope=' . $this->scope;
 		$url .= '&state=' . $this->state;
 		header($url);
 		try {
@@ -94,7 +96,7 @@ class Authentication
 		return array_shift($result);
 	}
 
-	public function _setTokenForLogin()
+	private function _setTokenForLogin()
 	{	
 		if (array_key_exists('gh-token', $_SESSION) && ($_SESSION['gh-token'])) {
 			$token = $_SESSION['gh-token'];

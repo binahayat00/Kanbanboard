@@ -8,6 +8,7 @@ use App\Classes\KanbanBoard\Application;
 use App\Classes\Utilities;
 use Mustache_Engine;
 use App\Classes\KanbanBoard\GithubClient;
+use Lib\Config;
 
 class GithubController
 {
@@ -35,7 +36,8 @@ class GithubController
         return $board->board();
     }
 
-    public function getMustache($data,$route){
+    public function getMustache($data,$route = null){
+        $route = ($route) ? $route : Config::get('VIEW_ROUTE');
         $loader = new Mustache_Loader_FilesystemLoader($route);
         $mustache = new Mustache_Engine(['loader' => $loader]);
         return $mustache->render('index', array('milestones' => $data));
@@ -46,7 +48,7 @@ class GithubController
         $token = $this->loginInGithub();
         $account = $this->getAccountGithubInEnv();
         $data = $this->getGithubData($repositories,$token,$account);
-        return $this->getMustache($data,$route = __DIR__ .'/../views');
+        return $this->getMustache($data);
     }
     
 }

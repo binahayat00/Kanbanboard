@@ -39,6 +39,16 @@ class KarbanBoardTest extends TestCase
             return;
         }
     }
+
+    // public function testgetMilestones(){
+    //     try {
+    //         $this->githubController->getMilestones();
+    //         $this->assertTrue(true);
+    //     } catch (\Exception $e) {
+    //         $this->assertSame(0, $e->getCode());
+    //         return;
+    //     }
+    // }
     
 }
 ?>
