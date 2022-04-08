@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Tests;
+namespace Tests\Unit\Controllers;
 
 use App\Controllers\GithubController;
 use PHPUnit\Framework\TestCase;
 
-class KarbanBoardTest extends TestCase
+class GithubTest extends TestCase
 {
     protected $githubController;
     protected function setUp(): void{
@@ -29,26 +29,6 @@ class KarbanBoardTest extends TestCase
         $response = $this->githubController->getRepositories();
         $this->assertIsArray($response);
     }
-
-    public function testLogin(){
-        try {
-            $this->githubController->loginInGithub();
-            $this->assertTrue(true);
-        } catch (\Exception $e) {
-            $this->assertSame(0, $e->getCode());
-            return;
-        }
-    }
-
-    // public function testgetMilestones(){
-    //     try {
-    //         $this->githubController->getMilestones();
-    //         $this->assertTrue(true);
-    //     } catch (\Exception $e) {
-    //         $this->assertSame(0, $e->getCode());
-    //         return;
-    //     }
-    // }
     
 }
 ?>

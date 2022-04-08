@@ -19,7 +19,7 @@ class Handler {
              $this->result = (new GithubController())->getMilestones();
         });
 
-        //if wad not '/' route //callback from github
+        //callback from github
         $this->result = ($this->result) ? $this->result : (new GithubController())->getMilestones();
 
         return $this->result;

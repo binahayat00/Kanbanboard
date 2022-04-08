@@ -554,12 +554,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "0247c78c62df83baea4a66ede00f9235e068aeea"
+                "reference": "42627d1d3f19885c80224e295dde5e25d6943810"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/0247c78c62df83baea4a66ede00f9235e068aeea",
-                "reference": "0247c78c62df83baea4a66ede00f9235e068aeea",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/42627d1d3f19885c80224e295dde5e25d6943810",
+                "reference": "42627d1d3f19885c80224e295dde5e25d6943810",
                 "shasum": ""
             },
             "require": {
@@ -614,7 +614,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-04-04T15:59:24+00:00"
+            "time": "2022-04-07T19:59:40+00:00"
         },
         {
             "name": "illuminate/macroable",
@@ -668,12 +668,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "665df7421d090fd58663d71483e853a57bb46196"
+                "reference": "3f6111d140c8be616f5bde2f5ece0ec6328184c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/665df7421d090fd58663d71483e853a57bb46196",
-                "reference": "665df7421d090fd58663d71483e853a57bb46196",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/3f6111d140c8be616f5bde2f5ece0ec6328184c5",
+                "reference": "3f6111d140c8be616f5bde2f5ece0ec6328184c5",
                 "shasum": ""
             },
             "require": {
@@ -729,7 +729,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-04-03T15:14:41+00:00"
+            "time": "2022-04-07T22:05:03+00:00"
         },
         {
             "name": "illuminated/testing-tools",
@@ -2606,12 +2606,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "8b34aeff6217559c4d8763e99709968840dff1b6"
+                "reference": "7f44980785f9e01b1f3415dc2b9c54c0d4743db1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/8b34aeff6217559c4d8763e99709968840dff1b6",
-                "reference": "8b34aeff6217559c4d8763e99709968840dff1b6",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7f44980785f9e01b1f3415dc2b9c54c0d4743db1",
+                "reference": "7f44980785f9e01b1f3415dc2b9c54c0d4743db1",
                 "shasum": ""
             },
             "require": {
@@ -2701,7 +2701,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-04-03T13:54:47+00:00"
+            "time": "2022-04-06T06:52:41+00:00"
         },
         {
             "name": "psr/cache",
@@ -5516,5 +5516,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }

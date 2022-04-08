@@ -50,13 +50,7 @@ class Authentication
 		$url .= '&scope=' . $this->scope;
 		$url .= '&state=' . $this->state;
 		header($url);
-		try {
-			throw new Exception($url);
-		} catch (Exception $e) {
-			echo $e->getMessage() . '  ';
-			echo $e->getCode();
-			return;
-		}
+		exit;
 	}
 
 	private function _returnsFromGithub($code)
