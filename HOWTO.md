@@ -1,4 +1,4 @@
-# Well come to Kanban board for Github issues
+# Wellcome to Kanban board for Github issues
 
 ## A Little About It
 
