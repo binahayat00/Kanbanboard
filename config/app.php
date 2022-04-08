@@ -1,6 +1,6 @@
-
 <?php
-// namespace Config;
+
+namespace Config;
 
 use Lib\Random;
 
