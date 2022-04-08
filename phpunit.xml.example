@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
-bootstrap="vendor/autoload.php"
-    colors="true"
-    stopOnFailure="false">
+        xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+        bootstrap="vendor/autoload.php" processIsolation="true"
+        colors="true"
+        stopOnFailure="false">
 
     <testsuites>
         <testsuite name="KarbanBoard">
@@ -21,8 +21,6 @@ bootstrap="vendor/autoload.php"
         <env name="GH_CLIENT_SECRET" value=""/>
         <env name="GH_ACCOUNT" value=""/>
         <env name="GH_REPOSITORIES" value=""/>
-        <!-- <env name="DB_CONNECTION" value="sqlite"/> -->
-        <!-- <env name="DB_DATABASE" value=":memory:"/> -->
         
     </php>
 </phpunit>
