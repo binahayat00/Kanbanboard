@@ -5,7 +5,7 @@ namespace Config;
 use Lib\Random;
 
 return [
-    'STATE' => Random::generateRandomString(18),
+    'STATE' => 'HETG1CtHJo0dpbR21W',//Random::generateRandomString(18),
     'SCOPE' => 'repo',
     'ACCESS_TOKEN_LINK' => 'https://github.com/login/oauth/access_token',
     'AUTHORIZE_LINK' => 'https://github.com/login/oauth/authorize',

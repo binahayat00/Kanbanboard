@@ -55,8 +55,7 @@ class Authentication
 
 		$params = http_build_query($data);
 		$url =sprintf('Location: %s?%s',$this->authorize_link,$params);
-		$url = "Location: {$this->authorize_link}?{$params}";
-
+		
 		header($url);
 		exit;
 	}
