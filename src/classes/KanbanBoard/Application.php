@@ -4,6 +4,7 @@ namespace App\Classes\KanbanBoard;
 
 use Michelf\Markdown;
 use App\Classes\Utilities;
+use Lib\Config;
 
 class Application
 {
@@ -109,7 +110,7 @@ class Application
 
 	private function setAssigneeForIssues(array $receivedIssue): ?string
 	{
-		return (is_array($receivedIssue) && array_key_exists('assignee', $receivedIssue) && !empty($receivedIssue['assignee'])) ? $receivedIssue['assignee']['avatar_url'] . '?s=16' : NULL;
+		return (is_array($receivedIssue) && array_key_exists('assignee', $receivedIssue) && !empty($receivedIssue['assignee'])) ? $receivedIssue['assignee']['avatar_url'] . '?s=' . Config::get('ASSIGNEE_URL_NUMBER') : NULL;
 	}
 
 	private static function _state($issue): string
@@ -137,14 +138,20 @@ class Application
 	private static function _percent(int|string $complete, int|string $remaining): array
 	{
 		$total = $complete + $remaining;
-		if ($total > 0) {
-			return [
+		$isPossitive = ($total > 0);
+		
+		if ($isPossitive) {
+			$result = [
 				'total' => $total,
 				'complete' => $complete,
 				'remaining' => $remaining,
 				'percent' => ($complete or $remaining) ? round($complete / $total * 100) : 0
 			];
 		}
-		return [];
+		else{
+			$result = [];
+		}
+
+		return $result;
 	}
 }

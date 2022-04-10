@@ -3,8 +3,8 @@
 namespace App\Classes\KanbanBoard;
 
 use App\Classes\Utilities;
-use Exception;
 use Lib\Config;
+use Lib\TokenException;
 
 class Authentication
 {
@@ -31,13 +31,15 @@ class Authentication
 	{
 		if (empty(session_id()) && !headers_sent())
 			session_start();
+			
 		$token = $this->_setTokenForLogin();
 		$this->logout();
 		$_SESSION['gh-token'] = $token;
+
 		return $token;
 	}
 
-	private function logout()
+	public function logout()
 	{
 		unset($_SESSION['gh-token']);
 	}
@@ -45,10 +47,16 @@ class Authentication
 	private function _redirectToGithub($client_id = null): void
 	{
 		$client_id = ($client_id) ? $client_id : $this->client_id;
-		$url = 'Location: ' . $this->authorize_link;
-		$url .= '?client_id=' . $client_id;
-		$url .= '&scope=' . $this->scope;
-		$url .= '&state=' . $this->state;
+		$data = [
+			'client_id' => $client_id,
+			'scope' => $this->scope,
+			'state' => $this->state
+		];
+
+		$params = http_build_query($data);
+		$url =sprintf('Location: %s?%s',$this->authorize_link,$params);
+		$url = "Location: {$this->authorize_link}?{$params}";
+
 		header($url);
 		exit;
 	}
@@ -84,7 +92,7 @@ class Authentication
 	private function _buildResultForGithubAccessToken(string $result)
 	{
 		if ($result === FALSE)
-			throw new Exception('Error: can not get data from access token.');
+			throw (new TokenException)->canNotGetData();
 
 		$result = explode('=', explode('&', $result)[0]);
 		array_shift($result);

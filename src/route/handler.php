@@ -9,10 +9,6 @@ class Handler
 {
 
     protected $result;
-    public function __construct()
-    {
-        $this->result;
-    }
 
     public function run()
     {
@@ -21,9 +17,12 @@ class Handler
             $this->result = (new GithubController())->getMilestones();
         });
 
-        //callback from github
-        $this->result = ($this->result) ? $this->result : (new GithubController())->getMilestones();
+        $this->callbackFromGithub();
 
         return $this->result;
+    }
+
+    public function callbackFromGithub(): void{
+        $this->result = ($this->result) ? $this->result : (new GithubController())->getMilestones();
     }
 }
