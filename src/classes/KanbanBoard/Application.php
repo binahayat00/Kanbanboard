@@ -17,8 +17,8 @@ class Application
 
 	public function board()
 	{
-		$getedMilestones = $this->getMilestonesInformation();
-		return $this->setParametersForBoard($getedMilestones);;
+		$receivedMilestones = $this->getMilestonesInformation();
+		return $this->setParametersForBoard($receivedMilestones);;
 	}
 
 	private function getMilestonesInformation(): array
@@ -34,10 +34,10 @@ class Application
 		return $result;
 	}
 
-	private function setParametersForBoard(array $getedMilestones): array
+	private function setParametersForBoard(array $receivedMilestones): array
 	{
 		$result = [];
-		foreach ($getedMilestones as $name => $data) {
+		foreach ($receivedMilestones as $name => $data) {
 			$issues = $this->issues($data['repository'], $data['number']);
 			$percent = self::_percent($data['closed_issues'], $data['open_issues']);
 			if ($percent) {
@@ -56,8 +56,8 @@ class Application
 
 	private function issues(string $repository, int|string $milestone_id): ?array
 	{
-		$getedIssues = $this->github->issues($repository, $milestone_id);
-		$issues = $this->setIssuesArray($getedIssues);
+		$receivedIssues = $this->github->issues($repository, $milestone_id);
+		$issues = $this->setIssuesArray($receivedIssues);
 		return $this->setResultOfIssue($issues);
 	}
 
@@ -79,37 +79,37 @@ class Application
 		return count($a['paused']) - count($b['paused']) === 0 ? strcmp($a['title'], $b['title']) : count($a['paused']) - count($b['paused']);
 	}
 
-	private function setIssuesArray(array $getedIssues): array
+	private function setIssuesArray(array $receivedIssues): array
 	{
 		$issues = [];
-		foreach ($getedIssues as $getedIssue) {
-			if (isset($getedIssue['pull_request']))
+		foreach ($receivedIssues as $receivedIssue) {
+			if (isset($receivedIssue['pull_request']))
 				continue;
-			$issues[$getedIssue['state'] === 'closed' ? 'completed' : (($getedIssue['assignee']) ? 'active' : 'queued')][] = $this->setIndexOfIssuesArray($getedIssue);
+			$issues[$receivedIssue['state'] === 'closed' ? 'completed' : (($receivedIssue['assignee']) ? 'active' : 'queued')][] = $this->setIndexOfIssuesArray($receivedIssue);
 		}
 		return $issues;
 	}
 
-	private function setIndexOfIssuesArray(array $getedIssue): array
+	private function setIndexOfIssuesArray(array $receivedIssue): array
 	{
 		return [
-			'id' => $getedIssue['id'], 'number' => $getedIssue['number'],
-			'title'            	=> $getedIssue['title'],
-			'body'             	=> Markdown::defaultTransform($getedIssue['body']),
-			'url' => $getedIssue['html_url'],
-			'assignee'         	=> $this->setAssigneeForIssues($getedIssue),
-			'paused'			=> self::labels_match($getedIssue, $this->paused_labels),
+			'id' => $receivedIssue['id'], 'number' => $receivedIssue['number'],
+			'title'            	=> $receivedIssue['title'],
+			'body'             	=> Markdown::defaultTransform($receivedIssue['body']),
+			'url' => $receivedIssue['html_url'],
+			'assignee'         	=> $this->setAssigneeForIssues($receivedIssue),
+			'paused'			=> self::labels_match($receivedIssue, $this->paused_labels),
 			'progress'			=> self::_percent(
-				substr_count(strtolower($getedIssue['body']), '[x]'),
-				substr_count(strtolower($getedIssue['body']), '[ ]')
+				substr_count(strtolower($receivedIssue['body']), '[x]'),
+				substr_count(strtolower($receivedIssue['body']), '[ ]')
 			),
-			'closed'			=> $getedIssue['closed_at']
+			'closed'			=> $receivedIssue['closed_at']
 		];
 	}
 
-	private function setAssigneeForIssues(array $getedIssue): ?string
+	private function setAssigneeForIssues(array $receivedIssue): ?string
 	{
-		return (is_array($getedIssue) && array_key_exists('assignee', $getedIssue) && !empty($getedIssue['assignee'])) ? $getedIssue['assignee']['avatar_url'] . '?s=16' : NULL;
+		return (is_array($receivedIssue) && array_key_exists('assignee', $receivedIssue) && !empty($receivedIssue['assignee'])) ? $receivedIssue['assignee']['avatar_url'] . '?s=16' : NULL;
 	}
 
 	private static function _state($issue): string
@@ -138,12 +138,11 @@ class Application
 	{
 		$total = $complete + $remaining;
 		if ($total > 0) {
-			$percent = ($complete or $remaining) ? round($complete / $total * 100) : 0;
 			return [
 				'total' => $total,
 				'complete' => $complete,
 				'remaining' => $remaining,
-				'percent' => $percent
+				'percent' => ($complete or $remaining) ? round($complete / $total * 100) : 0
 			];
 		}
 		return [];
