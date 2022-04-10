@@ -5,7 +5,8 @@ namespace App\Route;
 use App\Controllers\GithubController;
 use Lib\Router;
 
-class Handler {
+class Handler
+{
 
     protected $result;
     public function __construct()
@@ -13,10 +14,11 @@ class Handler {
         $this->result;
     }
 
-    public function run(){
+    public function run()
+    {
 
         Router::get('/', function () {
-             $this->result = (new GithubController())->getMilestones();
+            $this->result = (new GithubController())->getMilestones();
         });
 
         //callback from github
@@ -24,7 +26,4 @@ class Handler {
 
         return $this->result;
     }
-
-
-
 }

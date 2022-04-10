@@ -1,17 +1,18 @@
 {
 	"autoload": {
-		"psr-4":{
+		"psr-4": {
 			"App\\": "src/",
 			"Config\\": "config/",
 			"Lib\\": "lib/"
 		}
 	},
 	"autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
+		"psr-4": {
+			"Tests\\": "tests/"
+		}
+	},
 	"require": {
+		"php": "^8.0",
 		"mustache/mustache": "dev-main",
 		"vierbergenlars/php-semver": "^3.0",
 		"knplabs/github-api": "3.0",

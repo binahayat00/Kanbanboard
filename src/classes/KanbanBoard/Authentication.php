@@ -27,7 +27,7 @@ class Authentication
 		$this->header = "Content-type: application/x-www-form-urlencoded\r\n";
 	}
 
-	public function login()
+	public function login(): ?string
 	{
 		if (empty(session_id()) && !headers_sent())
 			session_start();
@@ -42,7 +42,7 @@ class Authentication
 		unset($_SESSION['gh-token']);
 	}
 
-	private function _redirectToGithub($client_id = null)
+	private function _redirectToGithub($client_id = null): void
 	{
 		$client_id = ($client_id) ? $client_id : $this->client_id;
 		$url = 'Location: ' . $this->authorize_link;
@@ -62,7 +62,7 @@ class Authentication
 		return $this->_buildResultForGithubAccessToken($result);
 	}
 
-	private function _buildParamsForGithubAccessToken($code)
+	private function _buildParamsForGithubAccessToken($code): array
 	{
 		$data = [
 			'code' => $code,
@@ -81,7 +81,7 @@ class Authentication
 		return $options;
 	}
 
-	private function _buildResultForGithubAccessToken($result)
+	private function _buildResultForGithubAccessToken(string $result)
 	{
 		if ($result === FALSE)
 			throw new Exception('Error: can not get data from access token.');
@@ -91,7 +91,7 @@ class Authentication
 		return array_shift($result);
 	}
 
-	private function _setTokenForLogin()
+	private function _setTokenForLogin(): ?string
 	{
 		if ($this->getTokenFromSessionConditions()) {
 			$token = $_SESSION['gh-token'];
@@ -106,12 +106,12 @@ class Authentication
 		return (isset($token)) ? $token : NULL;
 	}
 
-	private function getTokenFromSessionConditions()
+	private function getTokenFromSessionConditions(): bool
 	{
 		return (array_key_exists('gh-token', $_SESSION) && ($_SESSION['gh-token']));
 	}
 
-	private function returnsFromGithubConditions()
+	private function returnsFromGithubConditions(): bool
 	{
 		return (Utilities::hasValue($_GET, 'code') &&
 			Utilities::hasValue($_GET, 'state') &&

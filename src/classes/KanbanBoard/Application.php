@@ -8,7 +8,7 @@ use App\Classes\Utilities;
 class Application
 {
 
-	public function __construct($github, $repositories, $paused_labels = [])
+	public function __construct(object $github, array|string $repositories, $paused_labels = [])
 	{
 		$this->github = $github;
 		$this->repositories = $repositories;
@@ -18,11 +18,10 @@ class Application
 	public function board()
 	{
 		$getedMilestones = $this->getMilestonesInformation();
-		$milestones = $this->setParametersForBoard($getedMilestones);
-		return $milestones;
+		return $this->setParametersForBoard($getedMilestones);;
 	}
 
-	private function getMilestonesInformation()
+	private function getMilestonesInformation(): array
 	{
 		$result = [];
 		foreach ($this->repositories as $repository) {
@@ -35,7 +34,7 @@ class Application
 		return $result;
 	}
 
-	private function setParametersForBoard($getedMilestones)
+	private function setParametersForBoard(array $getedMilestones): array
 	{
 		$result = [];
 		foreach ($getedMilestones as $name => $data) {
@@ -55,14 +54,14 @@ class Application
 		return $result;
 	}
 
-	private function issues($repository, $milestone_id)
+	private function issues(string $repository, int|string $milestone_id): ?array
 	{
 		$getedIssues = $this->github->issues($repository, $milestone_id);
 		$issues = $this->setIssuesArray($getedIssues);
 		return $this->setResultOfIssue($issues);
 	}
 
-	private function setResultOfIssue($issues)
+	private function setResultOfIssue(array $issues): ?array
 	{
 		if (isset($issues['active'])) {
 			usort($issues['active'], function ($a, $b) {
@@ -75,13 +74,14 @@ class Application
 			return null;
 	}
 
-	private function differencePausedsOrTitles($a, $b)
+	private function differencePausedsOrTitles(array $a, array $b)
 	{
 		return count($a['paused']) - count($b['paused']) === 0 ? strcmp($a['title'], $b['title']) : count($a['paused']) - count($b['paused']);
 	}
 
-	private function setIssuesArray($getedIssues)
+	private function setIssuesArray(array $getedIssues): array
 	{
+		$issues = [];
 		foreach ($getedIssues as $getedIssue) {
 			if (isset($getedIssue['pull_request']))
 				continue;
@@ -90,7 +90,7 @@ class Application
 		return $issues;
 	}
 
-	private function setIndexOfIssuesArray($getedIssue)
+	private function setIndexOfIssuesArray(array $getedIssue): array
 	{
 		return [
 			'id' => $getedIssue['id'], 'number' => $getedIssue['number'],
@@ -107,12 +107,12 @@ class Application
 		];
 	}
 
-	private function setAssigneeForIssues($getedIssue)
+	private function setAssigneeForIssues(array $getedIssue): ?string
 	{
 		return (is_array($getedIssue) && array_key_exists('assignee', $getedIssue) && !empty($getedIssue['assignee'])) ? $getedIssue['assignee']['avatar_url'] . '?s=16' : NULL;
 	}
 
-	private static function _state($issue)
+	private static function _state($issue): string
 	{
 		if ($issue['state'] === 'closed')
 			return 'completed';
@@ -122,7 +122,7 @@ class Application
 			return 'queued';
 	}
 
-	private static function labels_match($issue, $needles)
+	private static function labels_match(array $issue, $needles): array
 	{
 		if (Utilities::hasValue($issue, 'labels')) {
 
@@ -134,7 +134,7 @@ class Application
 		return [];
 	}
 
-	private static function _percent($complete, $remaining)
+	private static function _percent(int|string $complete, int|string $remaining): array
 	{
 		$total = $complete + $remaining;
 		if ($total > 0) {
