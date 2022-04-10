@@ -1,5 +1,5 @@
 <?php
-var_dump('hi mehdi');die;
+
 include_once __DIR__ . '/vendor/autoload.php';
 
 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
