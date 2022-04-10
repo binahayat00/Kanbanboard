@@ -3,6 +3,5 @@ vendor/
 .env.testing
 INSTRUCTIONS.md
 README.md
-.htaccess
 .phpunit.result.cache
 phpunit.xml
