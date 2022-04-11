@@ -18,7 +18,7 @@ class UtilitiesTest extends TestCase
 
     public function testHasValue()
     {
-        $response = Utilities::hasValue(['1' => 'Test for hasValue function in Utilities Class'], 1);
+        $response = Utilities::hasValue(['1' => 'Test for hasValue function in Utilities Class'], '1');
         $this->assertTrue($response);
     }
 
