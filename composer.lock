@@ -2288,12 +2288,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "f8853c984a5e8e34596c9fc3be6a28474edfae7e"
+                "reference": "606275620e249aad454119d75a323e0a3ba9af3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/f8853c984a5e8e34596c9fc3be6a28474edfae7e",
-                "reference": "f8853c984a5e8e34596c9fc3be6a28474edfae7e",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/606275620e249aad454119d75a323e0a3ba9af3d",
+                "reference": "606275620e249aad454119d75a323e0a3ba9af3d",
                 "shasum": ""
             },
             "require": {
@@ -2357,7 +2357,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-04-02T15:48:11+00:00"
+            "time": "2022-04-11T06:10:56+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2606,12 +2606,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "28a154523c7167644a1e2102a5882efb56ef7815"
+                "reference": "523f111275d323f5811f0ef59320887e334197e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/28a154523c7167644a1e2102a5882efb56ef7815",
-                "reference": "28a154523c7167644a1e2102a5882efb56ef7815",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/523f111275d323f5811f0ef59320887e334197e1",
+                "reference": "523f111275d323f5811f0ef59320887e334197e1",
                 "shasum": ""
             },
             "require": {
@@ -2701,7 +2701,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-04-09T07:18:39+00:00"
+            "time": "2022-04-11T06:12:07+00:00"
         },
         {
             "name": "psr/cache",
