@@ -2,6 +2,8 @@
 
 namespace App\Route;
 
+require __DIR__ . '/../../lib/Router.php';
+
 use App\Controllers\GithubController;
 use Lib\Router;
 
